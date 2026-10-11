@@ -1,6 +1,6 @@
-/* CSS Styles for MteckGroup */
+/* CSS Styles for MteckGroup (Inspired by Alvion Gaming dark/gamer aesthetic) */
 :root {
-    --primary-color: #008000; /* Green accent color commonly used in moto/gaming */
+    --primary-color: #e60000; /* Red accent color commonly used in moto/gaming */
     --bg-dark: #0f1014;
     --bg-darker: #090a0c;
     --bg-card: #1a1c23;
@@ -54,18 +54,17 @@ a {
     backdrop-filter: blur(10px);
 }
 
-.logo h1 {
-    font-size: 1.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: var(--text-light);
-    margin-bottom: -5px;
+/* ADDED: Styling for the new logo image in navbar */
+.nav-logo-img {
+    height: 50px;
+    width: auto;
+    border-radius: 50%; /* Optional: Makes it circular if it's square */
+    border: 2px solid var(--primary-color);
+    transition: transform 0.3s;
 }
 
-.logo span {
-    font-size: 0.7rem;
-    color: var(--primary-color);
-    letter-spacing: 4px;
+.nav-logo-img:hover {
+    transform: scale(1.05);
 }
 
 nav ul {
@@ -133,11 +132,49 @@ nav ul li a:hover {
 /* Hero Section */
 .hero {
     height: 70vh;
-    background: linear-gradient(rgba(15, 16, 20, 0.7), rgba(15, 16, 20, 0.9)), url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2070&auto=format&fit=crop') center/cover;
+    /* REMOVED MOTORCYCLE BACKGROUND IMAGE, KEPT DARK GRADIENT */
+    background: linear-gradient(rgba(15, 16, 20, 0.85), rgba(15, 16, 20, 0.95));
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optional: Add a subtle pattern or glow behind the hero logo */
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(230,0,0,0.2) 0%, rgba(15,16,20,0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ADDED: Styling for the large logo in hero section */
+.hero-logo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    margin-bottom: 25px;
+    box-shadow: 0 0 20px rgba(230, 0, 0, 0.5);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
 
 .hero-content h2 {
@@ -166,7 +203,7 @@ nav ul li a:hover {
 }
 
 .btn-primary:hover {
-    background-color: #006400;
+    background-color: #cc0000;
 }
 
 /* Products Section */
@@ -261,7 +298,6 @@ nav ul li a:hover {
     font-size: 3rem;
 }
 
-/* Placeholder for actual images */
 .product-img img {
     width: 100%;
     height: 100%;
@@ -411,6 +447,122 @@ footer {
     font-size: 0.8rem;
 }
 
+/* =========================================
+   ADDED: Chat Bubble & Window Styles
+   ========================================= */
+.chat-bubble {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366; /* WhatsApp Green */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 9999;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.chat-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 320px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-window.show {
+    display: flex;
+}
+
+.chat-header {
+    background-color: #25D366;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h4 {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.close-chat {
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.close-chat:hover {
+    color: #f1f1f1;
+}
+
+.chat-body {
+    padding: 20px;
+    background-color: var(--bg-dark);
+}
+
+.chat-body p {
+    background-color: var(--bg-card);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    border-left: 3px solid #25D366;
+}
+
+.chat-footer {
+    padding: 15px;
+    background-color: var(--bg-card);
+    text-align: center;
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ebe57;
+    color: white;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .navbar {
@@ -425,5 +577,16 @@ footer {
     
     .hero-content h2 {
         font-size: 2.5rem;
+    }
+    
+    .chat-window {
+        right: 15px;
+        bottom: 90px;
+        width: calc(100% - 30px);
+    }
+    
+    .chat-bubble {
+        bottom: 20px;
+        right: 20px;
     }
 }

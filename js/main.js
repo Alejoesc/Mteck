@@ -148,6 +148,12 @@ function addToCart() {
     }, 1500);
 }
 
+// ADDED: Chat Bubble Functionality
+function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.classList.toggle('show');
+}
+
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
     renderNovedades();
