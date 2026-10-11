@@ -139,7 +139,7 @@ function addToCart() {
     const originalText = btn.textContent;
     btn.textContent = "¡AGREGADO!";
     btn.style.backgroundColor = "var(--primary-color)";
-    btn.style.color = "white";
+    btn.style.color = "#0f1014"; // Dark text for green background
     
     setTimeout(() => {
         btn.textContent = originalText;
@@ -148,7 +148,7 @@ function addToCart() {
     }, 1500);
 }
 
-// ADDED: Chat Bubble Functionality
+// Chat Bubble Functionality
 function toggleChat() {
     const chatWindow = document.getElementById('chatWindow');
     chatWindow.classList.toggle('show');

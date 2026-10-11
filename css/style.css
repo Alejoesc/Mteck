@@ -1,6 +1,7 @@
 /* CSS Styles for MteckGroup (Inspired by Alvion Gaming dark/gamer aesthetic) */
 :root {
-    --primary-color: #e60000; /* Red accent color commonly used in moto/gaming */
+    --primary-color: #bad332; /* MTECK GREEN EXTRACTED FROM LOGO */
+    --primary-color-hover: #9db522; /* Slightly darker green for hover effects */
     --bg-dark: #0f1014;
     --bg-darker: #090a0c;
     --bg-card: #1a1c23;
@@ -54,11 +55,10 @@ a {
     backdrop-filter: blur(10px);
 }
 
-/* ADDED: Styling for the new logo image in navbar */
 .nav-logo-img {
     height: 50px;
     width: auto;
-    border-radius: 50%; /* Optional: Makes it circular if it's square */
+    border-radius: 50%;
     border: 2px solid var(--primary-color);
     transition: transform 0.3s;
 }
@@ -103,6 +103,10 @@ nav ul li a:hover {
     outline: none;
 }
 
+.search-bar input:focus {
+    border-color: var(--primary-color);
+}
+
 .search-bar i {
     position: absolute;
     left: 10px;
@@ -115,6 +119,11 @@ nav ul li a:hover {
     position: relative;
     font-size: 1.2rem;
     cursor: pointer;
+    transition: color 0.3s;
+}
+
+.cart-icon:hover {
+    color: var(--primary-color);
 }
 
 .cart-count {
@@ -122,7 +131,7 @@ nav ul li a:hover {
     top: -8px;
     right: -10px;
     background-color: var(--primary-color);
-    color: white;
+    color: #0f1014; /* Dark text for better contrast on green */
     font-size: 0.7rem;
     font-weight: bold;
     padding: 2px 6px;
@@ -132,7 +141,6 @@ nav ul li a:hover {
 /* Hero Section */
 .hero {
     height: 70vh;
-    /* REMOVED MOTORCYCLE BACKGROUND IMAGE, KEPT DARK GRADIENT */
     background: linear-gradient(rgba(15, 16, 20, 0.85), rgba(15, 16, 20, 0.95));
     display: flex;
     align-items: center;
@@ -142,13 +150,13 @@ nav ul li a:hover {
     overflow: hidden;
 }
 
-/* Optional: Add a subtle pattern or glow behind the hero logo */
 .hero::before {
     content: '';
     position: absolute;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(230,0,0,0.2) 0%, rgba(15,16,20,0) 70%);
+    /* Updated glow to match Mteck Green */
+    background: radial-gradient(circle, rgba(186, 211, 50, 0.15) 0%, rgba(15,16,20,0) 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -160,14 +168,14 @@ nav ul li a:hover {
     z-index: 1;
 }
 
-/* ADDED: Styling for the large logo in hero section */
 .hero-logo {
     width: 180px;
     height: 180px;
     border-radius: 50%;
     border: 4px solid var(--primary-color);
     margin-bottom: 25px;
-    box-shadow: 0 0 20px rgba(230, 0, 0, 0.5);
+    /* Updated shadow to match Mteck Green */
+    box-shadow: 0 0 20px rgba(186, 211, 50, 0.4);
     animation: float 6s ease-in-out infinite;
 }
 
@@ -193,17 +201,18 @@ nav ul li a:hover {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white;
+    color: #0f1014; /* Dark text for better contrast on light green */
     padding: 12px 30px;
-    font-weight: bold;
+    font-weight: 900;
     text-transform: uppercase;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
     display: inline-block;
 }
 
 .btn-primary:hover {
-    background-color: #cc0000;
+    background-color: var(--primary-color-hover);
+    transform: translateY(-2px);
 }
 
 /* Products Section */
@@ -252,6 +261,7 @@ nav ul li a:hover {
 .filter-btn.active, .filter-btn:hover {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    color: #0f1014; /* Dark text on hover/active for green background */
 }
 
 /* Product Grid */
@@ -266,13 +276,14 @@ nav ul li a:hover {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     position: relative;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
     border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(186, 211, 50, 0.1);
 }
 
 .product-badge {
@@ -280,9 +291,9 @@ nav ul li a:hover {
     top: 10px;
     left: 10px;
     background-color: var(--primary-color);
-    color: white;
+    color: #0f1014;
     font-size: 0.7rem;
-    font-weight: bold;
+    font-weight: 900;
     padding: 3px 8px;
     border-radius: 3px;
     z-index: 10;
@@ -296,6 +307,11 @@ nav ul li a:hover {
     justify-content: center;
     color: #444;
     font-size: 3rem;
+    transition: color 0.3s;
+}
+
+.product-card:hover .product-img i {
+    color: var(--primary-color);
 }
 
 .product-img img {
@@ -348,6 +364,7 @@ nav ul li a:hover {
 .btn-add:hover {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    color: #0f1014;
 }
 
 /* About Section */
@@ -447,9 +464,7 @@ footer {
     font-size: 0.8rem;
 }
 
-/* =========================================
-   ADDED: Chat Bubble & Window Styles
-   ========================================= */
+/* Chat Bubble & Window Styles */
 .chat-bubble {
     position: fixed;
     bottom: 30px;
