@@ -1,4 +1,4 @@
-// Base de Datos de Productos (Ahora con PRECIOS)
+// Base de Datos de Productos con Precios
 const products = [
     {
         id: 1,
@@ -92,14 +92,14 @@ const products = [
     }
 ];
 
-let cart = []; // Memoria del carrito
+let cart = []; // Array que guarda los productos del carrito
 
-// Formatear moneda
+// Función para formatear dólares
 function formatPrice(price) {
     return `$${price.toFixed(2)}`;
 }
 
-// 1. GENERAR TARJETAS (Al hacer clic en la tarjeta, abre el Modal)
+// 1. GENERAR TARJETAS EN EL HTML
 function createProductCard(product) {
     return `
         <div class="product-card" data-category="${product.category}" onclick="openProductModal(${product.id})">
@@ -111,7 +111,6 @@ function createProductCard(product) {
                 <h4 class="product-title">${product.title}</h4>
                 <div class="product-price">${formatPrice(product.price)}</div>
                 <div class="product-actions">
-                    <!-- event.stopPropagation() evita que se abra el modal si damos directo al botón -->
                     <button class="btn-add" onclick="event.stopPropagation(); addToCart(${product.id}, event)">AÑADIR AL CARRITO</button>
                 </div>
             </div>
@@ -119,7 +118,7 @@ function createProductCard(product) {
     `;
 }
 
-// 2. RENDERIZADO Y BÚSQUEDA
+// 2. RENDERIZADO (Novedades y Catálogo)
 function renderNovedades() {
     const container = document.getElementById('novedades-grid');
     container.innerHTML = products.slice(0, 4).map(createProductCard).join('');
@@ -130,10 +129,12 @@ function renderCatalogo(filter = 'all', searchQuery = '') {
     const messageContainer = document.getElementById('search-results-message');
     let filteredProducts = products;
     
+    // Filtrado por categoría (botones)
     if (filter !== 'all') {
         filteredProducts = filteredProducts.filter(p => p.category === filter);
     }
     
+    // Filtrado por búsqueda de texto
     if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase();
         filteredProducts = filteredProducts.filter(p => 
@@ -147,6 +148,7 @@ function renderCatalogo(filter = 'all', searchQuery = '') {
         messageContainer.style.display = 'none';
     }
     
+    // Mostrar si está vacío
     if (filteredProducts.length === 0) {
         container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-size: 1.2rem; padding: 40px 0;">No encontramos productos que coincidan con tu búsqueda.</p>';
         return;
@@ -160,7 +162,6 @@ function openProductModal(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
 
-    // Llenar datos en el modal
     document.getElementById('modalTitle').textContent = product.title;
     document.getElementById('modalPrice').textContent = formatPrice(product.price);
     document.getElementById('modalDesc').textContent = product.desc;
@@ -173,27 +174,22 @@ function openProductModal(id) {
         tagEl.style.display = 'none';
     }
 
-    // Actualizar icono
     document.getElementById('modalImgIcon').className = `fas ${product.img_placeholder}`;
 
-    // Configurar botón del modal
     const addBtn = document.getElementById('modalAddBtn');
     addBtn.onclick = (e) => addToCart(product.id, e);
     addBtn.textContent = "AÑADIR AL CARRITO";
     addBtn.style.backgroundColor = ""; 
     addBtn.style.color = "";
 
-    // Mostrar modal
     document.getElementById('productModal').classList.add('show');
-    document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+    document.body.style.overflow = 'hidden'; 
 }
 
 function closeProductModal(event) {
-    // Si se pasa un evento y el clic no fue en el fondo oscuro, ignorar
     if (event && event.target.id !== 'productModal') return;
-    
     document.getElementById('productModal').classList.remove('show');
-    document.body.style.overflow = 'auto'; // Restaurar scroll
+    document.body.style.overflow = 'auto'; 
 }
 
 // 4. FUNCIONALIDAD DEL CARRITO
@@ -204,7 +200,6 @@ function addToCart(productId, event) {
     cart.push(product);
     updateCartUI();
     
-    // Efecto visual en el botón que se presionó (tarjeta o modal)
     if (event && event.target) {
         const btn = event.target;
         const originalText = btn.textContent;
@@ -226,7 +221,6 @@ function removeFromCart(index) {
 }
 
 function updateCartUI() {
-    // Actualizar conteo burbuja superior
     document.querySelector('.cart-count').textContent = cart.length;
     
     const container = document.getElementById('cartItemsContainer');
@@ -290,11 +284,11 @@ function checkout() {
     
     message += `%0A*Total Estimado: ${formatPrice(total)}*`;
     
-    // Abrir WhatsApp con el pedido generado
+    // Envía el mensaje directamente al número +58 424 5289254
     window.open(`https://wa.me/584245289254?text=${message}`, '_blank');
 }
 
-// 5. INICIALIZACIÓN
+// 5. INICIALIZACIÓN Y CHAT
 function toggleChat() {
     document.getElementById('chatWindow').classList.toggle('show');
 }
@@ -304,7 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCatalogo(); 
     updateCartUI(); 
     
-    // Filtros
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -315,13 +308,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Buscador en tiempo real
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value;
         renderCatalogo('all', query);
         
-        // Hacer scroll automático al catálogo si el usuario empieza a escribir
         if (query.length > 2) {
             document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
         }
